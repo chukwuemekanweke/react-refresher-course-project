@@ -5,6 +5,7 @@ export const Person = (props) => {
             <p>As a nwa igbo, i'm not just a person. I'm a rich person.</p>
             <p>My name is {props.name}</p>
             <p>My networth is {props.netWorth}</p>
+            <button onClick={props.click} >Double Your Hustle</button>
             <p>{props.children}</p>
         </Fragment>
 

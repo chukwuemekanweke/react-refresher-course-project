@@ -1,47 +1,57 @@
-import React, { Component, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import {Person} from './Components/Person/index';
 
-
-class App extends Component {
-
-  state = {
+const app = props =>{
+ 
+  const [functionalState,setFunctionalState] = useState({
     persons:[
 
-      {name:'Chidelu', netWorth: this.currencyFormat(Math.random() * 10000000000)},
-      {name:'Onyeka', netWorth: this.currencyFormat(Math.random() * 10000000000)},
-      {name:'Ugochukwu', netWorth: this.currencyFormat(Math.random() * 10000000000)}
-
+      {name:'Chidelu', netWorth: 0},
+      {name:'Onyeka', netWorth: 0},
+      {name:'Ugochukwu', netWorth: 0}
+  
     ]
-  };
+  })
 
+  
+const switchNetWorthHandler = () =>
+{
+   setFunctionalState({
+      persons:[
 
-  switchNetWorthHandler = () =>
-  {
-      this.setState({
-        persons:[
+        {name:'Chidelu', netWorth: generateNetWorth()},
+        {name:'Onyeka', netWorth: generateNetWorth()},
+        {name:'Ugochukwu', netWorth: generateNetWorth()}
+  
+      ]
+    });
+}
 
-          {name:'Chidelu', netWorth: this.currencyFormat(Math.random() * 10000000000)},
-          {name:'Onyeka', netWorth: this.currencyFormat(Math.random() * 10000000000)},
-          {name:'Ugochukwu', netWorth: this.currencyFormat(Math.random() * 10000000000)}
-    
-        ]
-      });
-  }
+const nameChangeHandler = ()=>{
+  
+}
 
-  render() {
+const generateNetWorth = ()=>{
+  return currencyFormat(Math.random() * 10000000000)
+}
+const currencyFormat = (num)=>{
+  return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+ 
     return (
       <div className="App">
         <h1>Hi, I'm An Expert Software Engineer. Chidelu By Name</h1>
         <p>Building Worlds Class Solutions that Solve Real Life Problems</p>
         <br></br>
-        <button onClick={this.switchNetWorthHandler} className="btn btn-primary">Switch Name</button>
+        <button onClick={switchNetWorthHandler} className="btn btn-primary">Switch Net Worth</button>
         <br></br>
         {
-          this.state.persons.map(person => 
+          functionalState.persons.map(person => 
             <Fragment>
-            <Person name={person.name} netWorth={person.netWorth} />
+            <Person click={switchNetWorthHandler}  name={person.name} netWorth={person.netWorth} />
             <br></br>
             </Fragment> 
           )
@@ -52,16 +62,24 @@ class App extends Component {
 
       //React.createElement('div',{className:'App'}, React.createElement('h1',null,"Damn, i just learnt something new"))
     );
-  }
+  
+
+}
+
+
+// let state = {
+//   persons:[
+
+//     {name:'Chidelu', netWorth: this.currencyFormat(Math.random() * 10000000000)},
+//     {name:'Onyeka', netWorth: this.currencyFormat(Math.random() * 10000000000)},
+//     {name:'Ugochukwu', netWorth: this.currencyFormat(Math.random() * 10000000000)}
+
+//   ]
+// };
 
 
   
- currencyFormat  (num)  {
-  return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-}
 
 
 
-}
-
-export default App;
+export default app;
