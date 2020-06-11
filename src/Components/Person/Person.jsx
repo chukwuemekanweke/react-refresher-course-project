@@ -1,7 +1,25 @@
 import React from 'react';
 import './Person.css'
-import Radium, {StyleRoot} from 'radium';
-const person = (props) => {
+import styled from 'styled-components'
+
+
+const StyledDiv = styled.div `
+    width:60%;
+    margin: 16px auto;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    padding:16px;
+    text-align:center ;
+       
+    '@media (min-width: 500px)':{
+        width: '450px',
+
+    }
+
+    `;
+
+
+export const Person = (props) => {
 
 
     const style = {
@@ -11,8 +29,10 @@ const person = (props) => {
         }
     }
 
+    
+
     return (
-        <div className="Person" style={style}>
+        <StyledDiv>
             <p>As a nwa igbo, i'm not just a person. I'm a rich person.</p>
             <p>My name is {props.name}</p>
             <p>My networth is {props.netWorth}</p>
@@ -27,9 +47,7 @@ const person = (props) => {
             <button onClick={props.forget} >Forget Fellow Billionaire</button>
 
             <p>{props.children}</p>
-        </div>
-
+        </StyledDiv>
     );
 }
 
-export const Person =  Radium(person)
