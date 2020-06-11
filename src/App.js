@@ -1,32 +1,35 @@
-import React, { useState, Fragment, Component } from 'react';
+import React, { Fragment, Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
-import {Person} from './Components/Person/index';
-
+import  {Person} from './Components/Person/index';
+import Radium,{StyleRoot} from 'radium'
 
 class App extends Component{
  
  state = {
     persons:[
 
-      {name:'Chidelu', netWorth: 0},
-      {name:'Onyeka', netWorth: 0},
-      {name:'Ugochukwu', netWorth: 0}
+      { id:"cabasa", name:'Chidelu', netWorth: 0},
+      { id:"casablanca", name:'Onyeka', netWorth: 0},
+      { id:"bianca", name:'Ugochukwu', netWorth: 0}
   
-    ]
+    ],
+    showPersons:false
   };
 
   
+
 switchNetWorthHandler = () =>
 {
    this.setState({
       persons:[
 
-        {name:'Chidelu', netWorth: this.generateNetWorth()},
-        {name:'Onyeka', netWorth: this.generateNetWorth()},
-        {name:'Ugochukwu', netWorth: this.generateNetWorth()}
+        {id:"cabasa",  name:'Chidelu', netWorth: this.generateNetWorth()},
+        {id:"casablanca", name:'Onyeka', netWorth: this.generateNetWorth()},
+        {id:"bianca",  name:'Ugochukwu', netWorth: this.generateNetWorth()}
   
-      ]
+      ],
+      showPersons:true
     });
 }
 
@@ -44,11 +47,24 @@ husltleForNetworthHandler = ( position) => {
 }
 
 nameChangeHandler = (position,event)=>{
-  let persons = this.state.persons.map((person,index)=>{    
+  let persons = [...this.state.persons]
+
+  persons = persons.map((person,index)=>{    
     if(position===index)
       person.name = event.target.value
     return person
   })
+
+  this.setState({
+    persons:persons
+  });
+}
+
+deletePersonHandler = (position,event) =>{
+  const persons = this.state.persons.slice();
+  //const persons = [...this.state.persons]
+  persons.splice(position,1);
+
 
   this.setState({
     persons:persons
@@ -65,31 +81,56 @@ nameChangeHandler = (position,event)=>{
  render(){
 
    const style={
-     backgroundColor:'white',
+     backgroundColor:'lightgreen',
      font:'inherit',
      border:'1px solid blue',
      padding:'8px',
-     cursor:'pointer'
+     cursor:'pointer',
+     ':hover':{
+       backgroundColor:'#0088FF',
+       color:'black' 
+     }
    }
 
-    return (
-      <div className="App">
-        <h1>Hi, I'm An Expert Software Engineer. Chidelu By Name</h1>
-        <p>Building Worlds Class Solutions that Solve Real Life Problems</p>
-        <br></br>
-        <button style={style} onClick={this.switchNetWorthHandler} className="btn btn-primary">Switch Net Worth</button>
-        <br></br>
-        {
-          this.state.persons.map((person,index) => 
-            <Fragment key={index}>
-            <Person  changed={this.nameChangeHandler.bind(this,index)} click={this.husltleForNetworthHandler.bind(this,index)}  name={person.name} netWorth={person.netWorth} />
-            <br></br>
-            </Fragment> 
-          )
+   let buttonText = "Show Persons";
 
-        }
-        
-      </div>
+   let persons = null;
+
+   let classes = ['red', 'bold'].join(' ');
+ 
+   if(this.state.showPersons){
+    buttonText = "Switch Net Worth";
+    style.backgroundColor = 'lightblue';
+    style[':hover'] = {
+      background:'#008299',
+      color:'black' 
+    }
+     persons = (
+                this.state.persons.map((person,index) => 
+              <Fragment key={person.id}>
+              <Person forget={this.deletePersonHandler.bind(this,index)}  changed={this.nameChangeHandler.bind(this,index)} click={this.husltleForNetworthHandler.bind(this,index)}  name={person.name} netWorth={person.netWorth} />
+              <br></br>
+              </Fragment> )
+     )
+
+   }
+
+
+
+    return (
+      <StyleRoot>
+        <div className="App">
+          <h1>Hi, I'm An Expert Software Engineer. Chidelu By Name</h1>
+          <p className={classes} >Building World Class Solutions that Solve Real Life Problems</p>
+          <br></br>
+          <button style={style} onClick={this.switchNetWorthHandler} className="btn btn-primary">{buttonText}</button>
+          <br></br>
+          {
+            persons
+          }
+          
+        </div>
+      </StyleRoot>
 
       //React.createElement('div',{className:'App'}, React.createElement('h1',null,"Damn, i just learnt something new"))
     );
@@ -100,4 +141,4 @@ nameChangeHandler = (position,event)=>{
 }
 
 
-export default App;
+export default Radium(App);
