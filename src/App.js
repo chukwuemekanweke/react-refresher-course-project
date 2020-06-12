@@ -2,24 +2,7 @@ import React, { Fragment, Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import  {Person} from './Components/Person/index';
-import styled from 'styled-components'
 
-
-const StyledButton = styled.button
-`
-
-  background-color: ${ props=> props.showPersons===true? 'lightblue':'lightgreen'} ;
-  font:inherit;
-  border:1px solid blue;
-  padding:8px;
-  cursor:pointer;
-  &:hover {
-    background-color: ${props => props.showPersons===true? '#008299':'#0088FF'}  ;
-    color:black;
-  }
-
-
-`
 
 class App extends Component{
  
@@ -139,7 +122,7 @@ deletePersonHandler = (position,event) =>{
           <h1>Hi, I'm An Expert Software Engineer. Chidelu By Name</h1>
           <p className={classes} >Building World Class Solutions that Solve Real Life Problems</p>
           <br></br>
-          <StyledButton showPersons={this.state.showPersons}  onClick={this.switchNetWorthHandler} className="btn btn-primary">{buttonText}</StyledButton>
+          <button  style={style}  onClick={this.switchNetWorthHandler} className="btn btn-primary">{buttonText}</button>
           <br></br>
           {
             persons
