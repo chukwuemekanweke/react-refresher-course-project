@@ -1,8 +1,22 @@
 import React, { Fragment, Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
+import styled from 'styled-components'
 import  {Person} from './Components/Person/index';
 
+const StyledButton = styled.button`
+
+background-color: ${props=> props.showPersons? 'red': 'lightgreen'} ;
+font: inherit;
+border: 1px solid blue;
+padding: 8px;
+cursor: pointer;
+&:hover {
+  background-color:  ${props=> props.showPersons? 'salmon': 'lightgreen'};
+  color: black;
+}
+
+`
 
 class App extends Component{
  
@@ -122,7 +136,7 @@ deletePersonHandler = (position,event) =>{
           <h1>Hi, I'm An Expert Software Engineer. Chidelu By Name</h1>
           <p className={classes} >Building World Class Solutions that Solve Real Life Problems</p>
           <br></br>
-          <button  style={style}  onClick={this.switchNetWorthHandler} className="btn btn-primary">{buttonText}</button>
+          <StyledButton showPersons = {this.state.showPersons}  onClick={this.switchNetWorthHandler} className="btn btn-primary">{buttonText}</StyledButton>
           <br></br>
           {
             persons
