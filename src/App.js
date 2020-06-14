@@ -1,22 +1,8 @@
 import React, { Fragment, Component } from 'react';
 // import logo from './logo.svg';
-import './App.css';
+import classes from './App.css';
 import styled from 'styled-components'
 import  {Person} from './Components/Person/index';
-
-const StyledButton = styled.button`
-
-background-color: ${props=> props.showPersons? 'red': 'lightgreen'} ;
-font: inherit;
-border: 1px solid blue;
-padding: 8px;
-cursor: pointer;
-&:hover {
-  background-color:  ${props=> props.showPersons? 'salmon': 'lightgreen'};
-  color: black;
-}
-
-`
 
 class App extends Component{
  
@@ -94,31 +80,24 @@ deletePersonHandler = (position,event) =>{
 
  render(){
 
-   const style={
-     backgroundColor:'lightgreen',
-     font:'inherit',
-     border:'1px solid blue',
-     padding:'8px',
-     cursor:'pointer',
-     ':hover':{
-       backgroundColor:'#0088FF',
-       color:'black' 
-     }
-   }
+   let btnClasses = [classes.Button]
 
    let buttonText = "Show Persons";
 
    let persons = null;
 
-   let classes = ['red', 'bold'].join(' ');
+   let assignedClasses = []
+
+   if(this.state.persons.length <= 2)
+    assignedClasses.push(classes.red);
+
+   if(this.state.persons.length <= 1)
+    assignedClasses.push(classes.bold);
+
  
    if(this.state.showPersons){
     buttonText = "Switch Net Worth";
-    style.backgroundColor = 'lightblue';
-    style[':hover'] = {
-      background:'#008299',
-      color:'black' 
-    }
+    
      persons = (
                 this.state.persons.map((person,index) => 
               <Fragment key={person.id}>
@@ -127,16 +106,18 @@ deletePersonHandler = (position,event) =>{
               </Fragment> )
      )
 
+     btnClasses.push(classes.Red);
    }
 
+   console.log({classes});
 
 
     return (
-        <div className="App">
+        <div className={classes.App}>
           <h1>Hi, I'm An Expert Software Engineer. Chidelu By Name</h1>
-          <p className={classes} >Building World Class Solutions that Solve Real Life Problems</p>
+          <p className={assignedClasses.join(' ')} >Building World Class Solutions that Solve Real Life Problems</p>
           <br></br>
-          <StyledButton showPersons = {this.state.showPersons}  onClick={this.switchNetWorthHandler} className="btn btn-primary">{buttonText}</StyledButton>
+          <button className={btnClasses.join(' ')}  onClick={this.switchNetWorthHandler} >{buttonText}</button>
           <br></br>
           {
             persons
