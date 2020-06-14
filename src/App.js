@@ -3,7 +3,7 @@ import React, { Fragment, Component } from 'react';
 import classes from './App.css';
 import styled from 'styled-components'
 import  {Person} from './Components/Person/index';
-
+import ErrorBoundary from './Components/ErrorBoundary/ErrorBoundary' 
 class App extends Component{
  
  state = {
@@ -113,6 +113,7 @@ deletePersonHandler = (position,event) =>{
 
 
     return (
+      <ErrorBoundary>
         <div className={classes.App}>
           <h1>Hi, I'm An Expert Software Engineer. Chidelu By Name</h1>
           <p className={assignedClasses.join(' ')} >Building World Class Solutions that Solve Real Life Problems</p>
@@ -124,6 +125,8 @@ deletePersonHandler = (position,event) =>{
           }
           
         </div>
+
+        </ErrorBoundary>
 
       //React.createElement('div',{className:'App'}, React.createElement('h1',null,"Damn, i just learnt something new"))
     );
