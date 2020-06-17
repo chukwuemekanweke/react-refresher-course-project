@@ -19,6 +19,7 @@ class App extends Component {
       { id: "bianca", name: "Ugochukwu", netWorth: 0 },
     ],
     showPersons: false,
+    showCockpit: true,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -26,12 +27,21 @@ class App extends Component {
     return state;
   }
 
-  componentWillMount() {
-    console.log("[App.js] componentWillMount");
-  }
+  // componentWillMount() {
+  //   console.log("[App.js] componentWillMount");
+  // }
 
   componentDidMount() {
     console.log("[App.js] componentDidMount");
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("[App.js] componentDidUpdate");
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("[App.js] shouldComponentUpdate");
+    return true;
   }
 
   switchNetWorthHandler = () => {
@@ -94,7 +104,7 @@ class App extends Component {
         <Persons
           persons={this.state.persons}
           deletePerson={(index) => this.deletePersonHandler(index)}
-          nameChange={(index) => this.nameChangeHandler(index)}
+          nameChange={(index, event) => this.nameChangeHandler(index, event)}
           hustleForNetworth={(index) => this.husltleForNetworthHandler(index)}
         ></Persons>
       );
@@ -103,12 +113,22 @@ class App extends Component {
     return (
       <ErrorBoundary>
         <div className={classes.App}>
-          <Cockpit
-            title={this.props.appTitle}
-            showPersons={this.state.showPersons}
-            persons={this.state.persons}
-            click={this.switchNetWorthHandler.bind(this)}
-          />
+          <button
+            onClick={() => {
+              this.setState({ showCockpit: false });
+            }}
+          >
+            Remove Cockpit
+          </button>
+
+          {this.state.showCockpit && (
+            <Cockpit
+              title={this.props.appTitle}
+              showPersons={this.state.showPersons}
+              personsLength={this.state.persons.length}
+              click={this.switchNetWorthHandler.bind(this)}
+            />
+          )}
 
           <br></br>
           {persons}
