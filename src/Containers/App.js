@@ -21,6 +21,19 @@ class App extends Component {
     showPersons: false,
   };
 
+  static getDerivedStateFromProps(props, state) {
+    console.log("[App.js] getDerivedStateFromProps", props);
+    return state;
+  }
+
+  componentWillMount() {
+    console.log("[App.js] componentWillMount");
+  }
+
+  componentDidMount() {
+    console.log("[App.js] componentDidMount");
+  }
+
   switchNetWorthHandler = () => {
     this.setState({
       persons: [
@@ -86,8 +99,6 @@ class App extends Component {
         ></Persons>
       );
     }
-
-    console.log({ classes });
 
     return (
       <ErrorBoundary>
