@@ -20,16 +20,11 @@ export class Person extends Component {
     console.log("[Person.jsx] rendering...");
     return (
       <div className={classes.Person}>
-        <AuthContext.Consumer>
-          {(context) => {
-            console.log({ context });
-            return context.authenticated ? (
-              <p>Authenticated</p>
-            ) : (
-              <p>Please log in</p>
-            );
-          }}
-        </AuthContext.Consumer>
+        {this.context.authenticated ? (
+          <p>Authenticated</p>
+        ) : (
+          <p>Please log in</p>
+        )}
 
         <p>As a nwa igbo, i'm not just a person. I'm a rich person.</p>
         <p>My name is {this.props.name}</p>
