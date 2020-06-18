@@ -1,16 +1,16 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import classes from "./Cockpit.css";
+import AuthContext from "../../Context/auth-context";
 
 const cockpit = (props) => {
+  const toggleButtonRef = useRef();
+
   useEffect(() => {
+    toggleButtonRef.current.click();
+
     console.log("[Cockpit.js] useEffect");
 
-    const timer = setTimeout(() => {
-      // alert("saved dat to the cloud");
-    });
-
     return () => {
-      clearTimeout(timer);
       console.log("[Cockpit.js] Cleanup work in useEffect");
     };
   }, []);
@@ -49,9 +49,12 @@ const cockpit = (props) => {
         Building World Class Solutions that Solve Real Life Problems
       </p>
       <br></br>
-      <button className={btnClass} onClick={props.click}>
+      <button ref={toggleButtonRef} className={btnClass} onClick={props.click}>
         {buttonText}
       </button>
+      <AuthContext.Consumer>
+        {(context) => <button onClick={context.login}>Log in</button>}
+      </AuthContext.Consumer>
     </div>
   );
 };

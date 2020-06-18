@@ -8,6 +8,7 @@ import { Persons } from "../Components/Persons/index";
 import { Cockpit } from "../Components/Cockpit/Cockpit";
 import { WithClass } from "../Hoc/WithClass";
 import { WithClass2 } from "../Hoc/WithClass2";
+import AuthContext from "../Context/auth-context";
 
 class App extends Component {
   constructor(props) {
@@ -22,6 +23,7 @@ class App extends Component {
     ],
     showPersons: false,
     showCockpit: true,
+    authenticated: false,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -49,7 +51,11 @@ class App extends Component {
   switchNetWorthHandler = () => {
     this.setState({
       persons: [
-        { id: "cabasa", name: "Chidelu", netWorth: this.generateNetWorth() },
+        {
+          id: "cabasa",
+          name: "Chidelu",
+          netWorth: this.generateNetWorth(),
+        },
         { id: "casablanca", name: "Onyeka", netWorth: this.generateNetWorth() },
         { id: "bianca", name: "Ugochukwu", netWorth: this.generateNetWorth() },
       ],
@@ -91,6 +97,10 @@ class App extends Component {
     });
   };
 
+  loginHandler = () => {
+    this.setState({ authenticated: true });
+  };
+
   generateNetWorth = () => {
     return this.currencyFormat(Math.random() * 10000000000);
   };
@@ -123,14 +133,21 @@ class App extends Component {
             Remove Cockpit
           </button>
 
-          {this.state.showCockpit && (
-            <Cockpit
-              title={this.props.appTitle}
-              showPersons={this.state.showPersons}
-              personsLength={this.state.persons.length}
-              click={this.switchNetWorthHandler.bind(this)}
-            />
-          )}
+          <AuthContext.Provider
+            value={{
+              authenticated: this.state.authenticated,
+              login: this.loginHandler,
+            }}
+          >
+            {this.state.showCockpit && (
+              <Cockpit
+                title={this.props.appTitle}
+                showPersons={this.state.showPersons}
+                personsLength={this.state.persons.length}
+                click={this.switchNetWorthHandler.bind(this)}
+              />
+            )}
+          </AuthContext.Provider>
 
           <br></br>
           {persons}
