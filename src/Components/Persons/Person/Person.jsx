@@ -9,8 +9,11 @@ export class Person extends Component {
     this.inputElementRef = createRef();
   }
 
+  static contextType = AuthContext;
+
   componentDidMount() {
     this.inputElementRef.current.focus();
+    console.log({ authenticated: this.context.authenticated });
   }
 
   render() {

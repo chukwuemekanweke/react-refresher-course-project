@@ -147,10 +147,10 @@ class App extends Component {
                 click={this.switchNetWorthHandler.bind(this)}
               />
             )}
-          </AuthContext.Provider>
 
-          <br></br>
-          {persons}
+            <br></br>
+            {persons}
+          </AuthContext.Provider>
         </WithClass>{" "}
       </ErrorBoundary>
 
