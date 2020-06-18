@@ -6,6 +6,8 @@ import { Person } from "../Components/Persons/Person/index";
 import ErrorBoundary from "../Components/ErrorBoundary/ErrorBoundary";
 import { Persons } from "../Components/Persons/index";
 import { Cockpit } from "../Components/Cockpit/Cockpit";
+import { WithClass } from "../Hoc/WithClass";
+import { WithClass2 } from "../Hoc/WithClass2";
 
 class App extends Component {
   constructor(props) {
@@ -112,7 +114,7 @@ class App extends Component {
 
     return (
       <ErrorBoundary>
-        <div className={classes.App}>
+        <WithClass classes={classes.App}>
           <button
             onClick={() => {
               this.setState({ showCockpit: false });
@@ -132,7 +134,7 @@ class App extends Component {
 
           <br></br>
           {persons}
-        </div>
+        </WithClass>{" "}
       </ErrorBoundary>
 
       //React.createElement('div',{className:'App'}, React.createElement('h1',null,"Damn, i just learnt something new"))
@@ -140,4 +142,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default WithClass2(App, "row");
